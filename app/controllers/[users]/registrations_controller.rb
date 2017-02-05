@@ -3,9 +3,12 @@ class [users]::RegistrationsController < Devise::RegistrationsController
 # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
-  # def new
-  #   super
-  # end
+   def new
+     super
+     @user.firstname = params[:user][:firstname]
+     @user.lastname = params[:user][:lastname]
+     @user.username = params[:user][:username]
+   end
 
   # POST /resource
   # def create

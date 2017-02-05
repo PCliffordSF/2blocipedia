@@ -2,9 +2,12 @@ class [users]::SessionsController < Devise::SessionsController
 # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
-  # def new
-  #   super
-  # end
+   def new
+     super
+     @user.firstname = params[:user][:firstname]
+     @user.lastname = params[:user][:lastname]
+     @user.username = params[:user][:username]
+   end
 
   # POST /resource/sign_in
   # def create
