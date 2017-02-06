@@ -1,4 +1,11 @@
 <div class="container">
     <% @user = current_user %>
     <p>Welome to Blocipedia <%= @user.email %></p>
+<div class="col-md-4">
+    <p>Would you like to create a new Wiki?</p>
+     <div>
+       <%= link_to "Create Wiki", new_wiki_path, class: 'btn btn-success' %>
+     </div>
+ 
+  <div>
 </div>
