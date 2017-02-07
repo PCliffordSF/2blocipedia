@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe WikisController, type: :controller do
+  
+  let(:user) {User.create(email: "test@mail.com", password: "password", confirmed_at: Time.now) }
+
+  before :each do 
+    sign_in user 
+  end
 
   describe "GET #new" do
     it "returns http success" do
