@@ -1,9 +1,10 @@
 class WikisController < ApplicationController
     
-#   def index
-#       @wikis = Wiki.all
-#       render :index
-#   end
+   def index
+       @user = current_user
+       @wikis = @user.wikis.all
+       render :index
+   end
   
   def show
       @wiki = Wiki.find(params[:id])

@@ -8,14 +8,15 @@
          <div class="media-body">
            <h4 class="media-heading">
 
-             <%= link_to wiki.name, wiki %>
+             <%= link_to wiki.title, wiki %>
            </h4>
            <small>
-             <%= wiki.description %>
+             <%= wiki.body %>
            </small>
          </div>
        </div>
      <% end %>
+     <%= link_to "Home", welcome_index_path, class: 'btn btn-success' %>
    </div>
  </div>
 
