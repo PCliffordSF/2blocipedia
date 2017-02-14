@@ -7,6 +7,7 @@ class WikisController < ApplicationController
    end
   
   def show
+  #    @some_user = User.find(params[:user_id])
       @wiki = Wiki.find(params[:id])
       render :show
   end

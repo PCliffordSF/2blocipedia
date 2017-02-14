@@ -9,6 +9,31 @@ RSpec.describe WikisController, type: :controller do
   before :each do 
     sign_in user 
   end
+  
+  context "user user doing CRUD on a wiki they own" do
+    
+      #########  GET SHOW  ########################
+  
+  
+  describe "GET #show" do
+    it "returns http success" do
+      get :show, id: wiki.id
+      expect(response).to have_http_status(:success)
+    end
+    
+    it "renders the #show view" do
+      get :show, id: wiki.id
+        expect(response).to render_template :show
+    end
+    
+    it "assigns @wiki to user" do
+      get :show, id: wiki.id
+        expect(assigns(:wiki)).to eq(wiki)
+      end
+    
+  end
+
+########## GET #NEW ##########################
 
   describe "GET #new" do
     it "returns http success" do
@@ -17,41 +42,39 @@ RSpec.describe WikisController, type: :controller do
     end
     
     it "renders the #new view" do
-      get :new, user_id: user.id, id: wiki.id
+      get :new
       expect(response).to render_template :new
     end
     
+    it "instantiates @wiki" do
+      get :new
+        expect(assigns(:wiki)).not_to be_nil
+      end
+    
   end
   
+  ############ POST CREATE #####################
   
-  describe "GET #show" do
-    it "returns http success" do
-      get :show, user_id: user.id, id: wiki.id
-      expect(response).to have_http_status(:success)
+  describe "POST #create" do
+    
+    it "increases the number of Wikis by 1" do
+      expect{ post :create, user_id: user.id, wiki: {title: "Title", body: "Body"} }.to change(Wiki,:count).by(1)
     end
-  end
-
-  describe "PUT #create" do
-    # it "increases the number of Wikis by 1" do
-    #     expect{ wiki :create, user_id: user.id, wiki: {title: "title", body: "body"} }.to change(Wiki,:count).by(1)
-    # end
+    it "assigns the new post to @post" do
+      post :create, user_id: user.id, wiki: {title: "Title", body: "Body"}
+      expect(assigns(:wiki)).to eq Wiki.last
+    end
     
     
     it "redirects to the newly created wiki" do
-      get :create, wiki: {title: "title", body: "body"}
+      post :create, wiki: {title: "title", body: "body"}
       expect(response).to redirect_to [Wiki.last]
     end
-    
-    
+  
   end
-
-  describe "PUT #update" do
-    it "returns http success" do
-    put :update, user_id: user.id, id: wiki.id, wiki: {title: "new_title", body: "new_body"}
-      expect(response).to redirect_to([wiki])
-    end
-  end
-
+  
+  ############# GET EDIT #################################
+  
   describe "GET #edit" do ####################
     
     it "returns http success" do
@@ -64,7 +87,7 @@ RSpec.describe WikisController, type: :controller do
       expect(response).to render_template :edit
     end
     
-    it "assigns post to be updated to @wiki" do
+    it "assigns wiki to be updated to @wiki" do
       get :edit, user_id: user.id, id: wiki.id 
       wiki_instance = assigns(:wiki)
 
@@ -73,12 +96,22 @@ RSpec.describe WikisController, type: :controller do
       expect(wiki_instance.body).to eq wiki.body
     end
     
-    
   end
+
+  ############ PUT UPDATE ##############################3
+
+  describe "PUT #update" do
+    it "returns http success" do
+    put :update, user_id: user.id, id: wiki.id, wiki: {title: "new_title", body: "new_body"}
+      expect(response).to redirect_to([wiki])
+    end
+  end
+
+
+  ################ DELETE DESTROY  ###########################3
   
   
-  
-  describe "GET #destroy" do  #######################
+  describe "GET #destroy" do
     it "deletes the wiki" do
       delete :destroy, user_id: user.id, id: wiki.id 
       count = Wiki.where({id: wiki.id}).size
@@ -90,7 +123,6 @@ RSpec.describe WikisController, type: :controller do
       expect(response).to redirect_to welcome_index_path
     end
     
-    
   end
 
 
@@ -101,5 +133,7 @@ RSpec.describe WikisController, type: :controller do
       expect(response).to have_http_status(:success)
     end
   end
+
+end
 
 end
