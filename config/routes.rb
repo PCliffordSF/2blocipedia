@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 ##  end
 
   devise_for :users
+  root 'welcome#index'
+  
   get 'welcome/index'
 
   get 'welcome/about'
@@ -12,7 +14,7 @@ Rails.application.routes.draw do
   get 'about' => 'welcome#about'
   
   
-  root({to: 'welcome#index'})
+  
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
