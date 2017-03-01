@@ -5,13 +5,14 @@ Rails.application.routes.draw do
 ##  end
 
   devise_for :users
-  root 'welcome#index'
   
   get 'welcome/index'
 
   get 'welcome/about'
   
   get 'about' => 'welcome#about'
+  
+  root 'welcome#index'
   
   
   
